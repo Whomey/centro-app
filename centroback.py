@@ -17,7 +17,7 @@ requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
 app = Flask(__name__)
 
 connection = pymysql.connect(host="pi.cs.oswego.edu",
-user="centroWriter", password="centroWriter", db="Centro",
+user="USERREMOVEDFORSECURITY", password="PASSWORDREMOVEDFORSECURITY", db="Centro",
 cursorclass=pymysql.cursors.DictCursor)
 
 cur = connection.cursor()
