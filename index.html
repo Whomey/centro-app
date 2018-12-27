@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+
+<html>
+
+	<head>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+
+	<title>Centro Website</title>
+	</head>
+
+	<body style="background-color:#427BB8">
+	</body>
+	<h1 style="color:#FFFFFF">CSC380 Centro Website</h1>
+
+	<fieldset style="background-color:#FFFFFF; height: 500px;" >
+	<h1 style="position: absolute; top:13%; right: 30%; height:25px;"> Bus Arrival Accuracy</h1>
+	<p>
+	<br>
+	<br>
+	<br>
+	<h2 style="position: absolute; left: 3%; top: 21%;">
+	Select a Stop: </br>
+	Select Bus Direction: 
+	</h2>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	</p>
+	</fieldset>
+
+
+<form method="POST">
+	<div class="dropdown">
+		<select name="stopInput" id="optionsList" style="width: 200px; height: 25px; position: absolute; left: 20%; top: 23.8%; z-index: 1;">
+			<option value="" selected disabled hidden></option>
+			<option value="15521">SUNY Campus Center</option>
+			<option value="17941">Rice Creek</option>
+			<option value="15534">SUNY Oswego Laker Hall</option>
+			<!--<option value="16183">Penfield Library</option>
+			<option value="18045">Minetto Senior Housing</option>
+			<option value="15998">Price Chopper Plaza Oswego</option>
+			<option value="15517">Simeon Dewitt Apartments</option>-->
+			<!--<option value="15527">SUNY New Campus</option>
+			<option value="17539">SUNY Oswego The Village</option>
+			<option value="16169">Walker Health Center</option>
+			<option value="9679">Washington Blvd + Baylis St.</option>
+			<option value="9682">Washington Blvd + Sheldon Ave<option>
+			<option value="16085">5th Ave + Washington Blvd</option>
+			<option value="16306">Laker Hall</option>-->
+			<!--<option value="3486">Sheldon Ave + W Bridge St.</option>
+			<option value="16086">5th Ave + HWY 104</option>-->
+			<!--<option value="16160">SUNY Oswego Romney Lot Shelter</option>
+			<option value="16168">Rudolph St. + Centennial Dr</option>
+			<option value="16164">Sheldon Ave + Takamine Rd</option>-->
+		</select>
+	</div>
+	
+	<div class="direction">
+		<select name="dir" id="dests" style="width: 200px; height: 25px; position: absolute; left: 20%; top: 27.5%; z-index: 1;">
+			<option value="" selected disabled hidden>
+			<option value="from campus"> From Campus </option>
+			<option value="to campus"> Towards Campus </option>
+		</select>
+	</div>
+	
+	<input type="submit" value="Submit" style="position: absolute; left: 23.5%; top: 35%; width: 100px; z-index: 1;">
+</form>
+
+<div class="chartcontainer" style="width: 600px; height: 500px; position:absolute; right: 20%; top: 20%;">
+  <h2 id="tableName" style="text-align: center";></h2>
+  <div>
+    <canvas id="myChart" style="box-shadow: 2px 2px 10px 2px gray;"></canvas>
+  </div>
+  
+	<DIV style="position: absolute; left:496px; top: 76%; width:200px; height:25px">Late</DIV>
+
+	<DIV style="position: absolute; left:100px; top: 76%; width:200px; height:25px">Early</DIV>
+  
+	<h1 style="text-align:center; font-size: 20px;"> Minutes </h1>
+</div>
+
+
+
+<script>
+var ctx = document.getElementById("myChart").getContext('2d');
+var myChart = new Chart(ctx, {
+	type: 'bar',
+	
+	data: {
+		labels: ["10-8", "8-6", "6-4", "4-2", "2-0", "0", "0-2", "2-4", "4-6", "6-8", "8-10"],
+		datasets: [{
+		label: 'Time Window',
+		data: [{{ data.E5 }}, {{ data.E4 }}, {{ data.E3 }}, {{ data.E2 }}, {{ data.E1 }}, {{ data.zero }}, {{ data.L1 }}, {{ data.L2 }}, {{ data.L3 }}, {{ data.L4 }}, {{ data.L5 }}],
+		backgroundColor: "#5fbf6e",
+		}]
+	},
+	
+	options: {
+		scales: {
+			yAxes: [
+                {
+                    position: "left",
+                    scaleLabel: {
+                        display: true,
+                        labelString: "Arrivals",
+                    },
+                    ticks: {
+                        min: 0,
+                        max: 100,
+                    },
+                }
+            ],
+		},
+	}
+	
+});
+
+let o = document.getElementById("optionsList");
+let d = document.getElementById("dests");
+window.onchange = function(){localStorage.setItem("opt", o.options[o.selectedIndex].text) + "  " + localStorage.setItem("opt2", d.options[d.selectedIndex].text) ;}
+
+document.getElementById("tableName").innerHTML = localStorage.getItem("opt") + " : " + localStorage.getItem("opt2");
+
+
+ 
+</script>
